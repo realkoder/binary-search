@@ -24,12 +24,12 @@ fileStream.on("end", () => {
         }
     });
     const maxGuessAmount = Math.ceil(Math.log2(globalArrayOfWords.length - 1));
-    globalArrayOfWords = globalArrayOfWords.sort((a, b) => a.variant - b.variant);
+    globalArrayOfWords = globalArrayOfWords.sort((a, b) => a.variant.localeCompare(b.variant));
 
-    const searchWord = "sidelomme";
+    const searchWord = "heste";
     console.log("Max iteration for finding a word within globalArrayOfWords = ", maxGuessAmount);
     console.log(`Index for "${searchWord}": `, binarySearchFunction({ variant: searchWord }, globalArrayOfWords, compareWordVariant));
-
+    console.log("Index for searchword with js find method: ", globalArrayOfWords.findIndex(word => word.variant === searchWord));
 });
 
 
@@ -41,13 +41,11 @@ const binarySearchFunction = (value, values, compare) => {
     if (values.length === 0) return;
 
     let start = 0;
-    let end = values.length - 1;
-    let middle = 0;
-    let comparedValue = 0;
+    let end = values.length - 1;    
 
     while (start <= end) {
-        middle = Math.floor(start + ((end - start) / 2));
-        comparedValue = compare(value, values[middle]);
+        const middle = Math.floor(start + ((end - start) / 2));
+        const comparedValue = compare(value, values[middle]);
 
         if (comparedValue === 0) {
             return middle;
