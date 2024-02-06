@@ -23,19 +23,17 @@ fileStream.on("end", () => {
             id: parts[4]
         }
     });
-    console.log("LINE 28: ", globalArrayOfWords.length);
-    console.log("LINE 28: ", globalArrayOfWords[348363]);
-
+    const maxGuessAmount = Math.ceil(Math.log2(globalArrayOfWords.length - 1));
     globalArrayOfWords = globalArrayOfWords.sort((a, b) => a.variant - b.variant);
 
     const searchWord = "sidelomme";
+    console.log("Max iteration for finding a word within globalArrayOfWords = ", maxGuessAmount);
     console.log(`Index for "${searchWord}": `, binarySearchFunction({ variant: searchWord }, globalArrayOfWords, compareWordVariant));
 
 });
 
 
-const compareWordVariant = (search, check) => {
-    console.log(`comparing ${search.variant} with ${check.variant}`);
+const compareWordVariant = (search, check) => {    
     return search.variant.localeCompare(check.variant);
 };
 
